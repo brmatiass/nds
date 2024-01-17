@@ -1,0 +1,5 @@
+package com.sistema.web.exception;
+
+public class ProblemType {
+
+}

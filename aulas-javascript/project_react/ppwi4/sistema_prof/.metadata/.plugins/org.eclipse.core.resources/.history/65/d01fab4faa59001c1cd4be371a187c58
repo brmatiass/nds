@@ -1,0 +1,239 @@
+package com.sistema.models.domain;
+
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.Date;
+import javax.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@Table(name = "TAB_FORNECEDOR")
+public class Fornecedor {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	private String snome;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "FORNECEDOR_PRODUTO",
+		joinColumns = {@JoinColumn(name = "FORNECEDOR-ID")},
+		inverseJoinColumns = {@JoinColumn(name = "PRODUTO_ID")})
+	private String categoria;
+	private String contato;
+	private String endereco;
+	private String bairro;
+	private String cidade;
+	private String estado;
+	private String pais;
+	
+	private List<Produto> produtos;
+	private List<Contato> contatos;
+	private List<Cliente> clientes;
+	
+	public Fornecedor() {
+		
+	}
+
+	public Fornecedor(Long id, String snome, String categoria, String contato, String endereco, String bairro,
+			String cidade, String estado, String pais, List<Produto> produtos, List<Contato> contatos,
+			List<Cliente> clientes) {
+		super();
+		this.id = id;
+		this.snome = snome;
+		this.categoria = categoria;
+		this.contato = contato;
+		this.endereco = endereco;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.pais = pais;
+		this.produtos = produtos;
+		this.contatos = contatos;
+		this.clientes = clientes;
+	}
+
+
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+	@Column(name = "ID_FORNECEDOR")	
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	@Column(name = "NOME_FORNECEDOR", length = 80, nullable = false)
+	
+	public String getSnome() {
+		return snome;
+	}
+
+
+	public void setSnome(String snome) {
+		this.snome = snome;
+	}
+
+
+	@Column(name = "CATEGORIA_FORNECEDOR", length = 20, nullable = false)
+	
+	public String getCategoria() {
+		return categoria;
+	}
+
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
+	
+	@Column(name = "CONTATO_FORNECEDOR", length = 17, nullable = false)
+
+	public String getContato() {
+		return contato;
+	}
+
+
+	public void setContato(String contato) {
+		this.contato = contato;
+	}
+
+	
+	@Column(name = "ENDERECO_FORNECEDOR", length = 30, nullable = false)
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+
+	@Column(name = "BAIRRO_FORNECEDOR", length = 80, nullable = false)
+	
+	public String getBairro() {
+		return bairro;
+	}
+
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	
+	@Column(name = "CIDADE_FORNECEDOR", length = 30, nullable = false)
+
+	public String getCidade() {
+		return cidade;
+	}
+
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	
+	@Column(name = "ESTADO_FORNECEDOR", length = 20, nullable = false)
+
+	public String getEstado() {
+		return estado;
+	}
+
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	
+	
+	@Column(name = "PAIS_FORNECEDOR", length = 20, nullable = false)
+
+	public String getPais() {
+		return pais;
+	}
+
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "fornecedor")
+	public List<Contato> getContatos() {
+		return contatos;
+	}
+
+	public void setContatos(List<Contato> contatos) {
+		this.contatos = contatos;
+	}
+
+	@Size(min=1, message = "Obrigatório informar um produto.")
+	@ManyToMany
+	@JoinTable(name="TAB_FORNECEDOR_PRODUTO", 
+		joinColumns = @JoinColumn(name = "ID_PRODUTO"),
+		inverseJoinColumns = @JoinColumn(name = "ID_FORNECEDOR"))
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
+	
+	@ManyToMany(mappedBy="fornecedores")
+	public List<Cliente> getClientes() {
+		return clientes;
+	}
+
+	public void setClientes(List<Cliente> clientes) {
+		this.clientes = clientes;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(snome, bairro, categoria, cidade, clientes, contato, contatos, endereco, estado, id, pais,
+				produtos);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Fornecedor other = (Fornecedor) obj;
+		return Objects.equals(snome, other.snome) && Objects.equals(bairro, other.bairro)
+				&& Objects.equals(categoria, other.categoria) && Objects.equals(cidade, other.cidade)
+				&& Objects.equals(clientes, other.clientes) && Objects.equals(contato, other.contato)
+				&& Objects.equals(contatos, other.contatos) && Objects.equals(endereco, other.endereco)
+				&& Objects.equals(estado, other.estado) && Objects.equals(id, other.id)
+				&& Objects.equals(pais, other.pais) && Objects.equals(produtos, other.produtos);
+	}
+
+	@Override
+	public String toString() {
+		return "Fornecedor [id=" + id + ", Snome=" + snome + ", categoria=" + categoria + ", contato=" + contato
+				+ ", endereco=" + endereco + ", bairro=" + bairro + ", cidade=" + cidade + ", estado=" + estado
+				+ ", pais=" + pais + ", produtos=" + produtos + ", contatos=" + contatos + ", clientes=" + clientes
+				+ "]";
+	}
+	
+}

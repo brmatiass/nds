@@ -1,0 +1,5 @@
+package com.sistema.models.domain;
+
+public class FornecedorProdutoPK {
+
+}

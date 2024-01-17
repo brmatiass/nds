@@ -1,0 +1,22 @@
+package com.sistema.web.exception;
+
+public class Fields {
+	
+	private String snome;
+	private String userMessage;
+	
+	
+	public String getNome() {
+		return snome;
+	}
+	public void setNome(String nome) {
+		this.snome = snome;
+	}
+	public String getUserMessage() {
+		return userMessage;
+	}
+	public void setUserMessage(String userMessage) {
+		this.userMessage = userMessage;
+	}
+
+}

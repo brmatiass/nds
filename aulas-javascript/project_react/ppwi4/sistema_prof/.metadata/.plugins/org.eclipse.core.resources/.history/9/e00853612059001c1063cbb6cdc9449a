@@ -1,0 +1,54 @@
+package com.sistema.models.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sistema.models.domain.FornecedorProdutoId;
+import com.sistema.models.repository.FornecedorProdutoRepository;
+import com.sistema.models.service.faces.FornecedorProdutoService;
+
+@Service
+@Transactional
+public class FornecedorProdutoImpl implements FornecedorProdutoService{
+
+	@Autowired
+	private FornecedorProdutoRepository fornecedorProdutoRepository;
+	
+	@Override
+	public List<com.sistema.models.domain.FornecedorProdutoPK> findAll() {
+		// TODO Auto-generated method stub
+		return fornecedorProdutoRepository.findAll();
+	}
+
+	@Override
+	public com.sistema.models.domain.FornecedorProdutoPK save(
+			com.sistema.models.domain.FornecedorProdutoPK fornecedorProduto) {
+		// TODO Auto-generated method stub
+		return fornecedorProdutoRepository.save(fornecedorProduto);
+	}
+
+	@Override
+	public com.sistema.models.domain.FornecedorProduto update(
+			com.sistema.models.domain.FornecedorProdutoPK fornecedorProduto) {
+		// TODO Auto-generated method stub
+		return fornecedorProdutoRepository.save(fornecedorProduto);
+	}
+
+	@Override
+	public void deleteById(FornecedorProdutoId id) {
+		fornecedorProdutoRepository.deleteById(id);
+		
+	}
+
+	@Override
+	public Optional<com.sistema.models.domain.FornecedorProdutoPK> findById(FornecedorProdutoId id) {
+		// TODO Auto-generated method stub
+		return fornecedorProdutoRepository.findById(id);
+	}	
+	
+}
